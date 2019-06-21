@@ -40,7 +40,7 @@
                             @if(is_numeric(Request::segment($i)))
                                 {{ Request::segment($i) }}
                             @else
-                                {{ isset($breadcurmb_menu) && $breadcurmb_menu ? $breadcurmb_menu[Request::segment($i)] : Request::segment($i) }}
+                                {{ isset($breadcurmb_menu) && $breadcurmb_menu ? ($breadcurmb_menu[Request::segment($i)] ?? ucfirst(Request::segment($i))) : ucfirst(Request::segment($i)) }}
                             @endif
                         </li>
                     @endfor
