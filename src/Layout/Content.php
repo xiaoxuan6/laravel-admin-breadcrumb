@@ -6,6 +6,7 @@ use Closure;
 use Encore\Admin\Auth\Database\Menu;
 use Encore\Admin\Layout\Row;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Str;
 
 class Content implements Renderable
 {
@@ -53,8 +54,12 @@ class Content implements Renderable
             $callback($this);
         }
 
-        $breadcurmb_menu = Menu::pluck('title', 'uri')->toArray();
-        $this->breadcurmb_menu = (array) array_merge($breadcurmb_menu, ['create' => '新增', "edit" => '编辑']);
+        if (config('admin.extensions.breadcrumb.enable', 'false'))
+        {
+            $breadcurmb_menu = Menu::pluck('title', 'uri')->except(['/', ""])->toArray();
+            $breadcurmb = config('breadcurmb.lang');
+            $this->breadcurmb_menu = (array) array_merge($breadcurmb_menu, $breadcurmb);
+        }
     }
 
     /**
