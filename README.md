@@ -34,7 +34,25 @@ Fourth
          ]
      ]
 
-User
+### 注意事项
+<div>
+    <table border="0">
+	  <tr>
+	    <th>Version</th>
+	    <th>Laravel-Admin Version</th>
+	  </tr>
+	  <tr>
+	    <td>1.1.2.1</td>
+	    <td>< 1.7</td>
+	  </tr>
+	  <tr>
+        <td>^1.2.*</td>
+        <td>>= 1.7</td>
+      </tr>
+	</table>
+</div> 
+
+# 1.1.2.1 User
        
 将控制器中
        
@@ -43,3 +61,13 @@ User
 替换
 
     use James\Admin\Breadcrumb\Layout\Content;
+    
+# 1.2.* User
+
+将控制器中
+       
+    use Encore\Admin\Controllers\AdminController;
+       
+替换
+
+    use James\Admin\Breadcrumb\BaseController;
