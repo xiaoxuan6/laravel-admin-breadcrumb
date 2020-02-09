@@ -47,7 +47,11 @@ Fourth
 	  </tr>
 	  <tr>
         <td>^1.2.*</td>
-        <td>>= 1.7</td>
+        <td>>= 1.7.9</td>
+      </tr>
+	  <tr>
+        <td>1.3.*</td>
+        <td>1.7.9</td>
       </tr>
 	</table>
 </div> 
@@ -62,7 +66,7 @@ Fourth
 
     use James\Admin\Breadcrumb\Layout\Content;
     
-# 1.2.* User
+# 1.2.* / 1.3.* User
 
 将控制器中
        

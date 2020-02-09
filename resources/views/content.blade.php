@@ -1,10 +1,10 @@
-@extends('admin::index', ['header' => $header])
+@extends('admin::index', ['header' => strip_tags($header)])
 
 @section('content')
     <section class="content-header">
         <h1>
-            {{ $header ?: trans('admin.title') }}
-            <small>{{ $description ?: trans('admin.description') }}</small>
+            {!! $header ?: trans('admin.title') !!}
+            <small>{!! $description ?: trans('admin.description') !!}</small>
         </h1>
 
         <!-- breadcrumb start -->
@@ -65,7 +65,11 @@
         @include('admin::partials.exception')
         @include('admin::partials.toastr')
 
-        {!! $content !!}
+        @if($_view_)
+            @include($_view_['view'], $_view_['data'])
+        @else
+            {!! $_content_ !!}
+        @endif
 
     </section>
 @endsection

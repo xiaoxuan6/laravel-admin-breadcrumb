@@ -4,8 +4,10 @@ namespace James\Admin\Breadcrumb\Layout;
 
 use Closure;
 use Encore\Admin\Auth\Database\Menu;
+use Encore\Admin\Facades\Admin;
 use Encore\Admin\Layout\Row;
 use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Support\Arr;
 
 class Content implements Renderable
 {
@@ -41,6 +43,11 @@ class Content implements Renderable
      * @var Row[]
      */
     protected $rows = [];
+
+    /**
+     * @var array
+     */
+    protected $view;
 
     /**
      * Content constructor.
@@ -173,11 +180,13 @@ class Content implements Renderable
      * @param string $view
      * @param array  $data
      *
-     * @return Content
+     * @return $this
      */
-    public function view($view, $data)
+    public function view($view, $data = [])
     {
-        return $this->body(view($view, $data));
+        $this->view = compact('view', 'data');
+
+        return $this;
     }
 
     /**
@@ -281,6 +290,18 @@ class Content implements Renderable
     }
 
     /**
+     * @return array
+     */
+    protected function getUserData()
+    {
+        if (!$user = Admin::user()) {
+            return [];
+        }
+
+        return Arr::only($user->toArray(), ['id', 'username', 'email', 'name', 'avatar']);
+    }
+
+    /**
      * Render this content.
      *
      * @return string
@@ -291,8 +312,10 @@ class Content implements Renderable
             'header'      => $this->title,
             'description' => $this->description,
             'breadcrumb'  => $this->breadcrumb,
-            'content'     => $this->build(),
+            '_content_'   => $this->build(),
             'breadcurmb_menu'     => $this->breadcurmb_menu,
+            '_view_'      => $this->view,
+            '_user_'      => $this->getUserData(),
         ];
 
         return view('admin::content', $items)->render();
